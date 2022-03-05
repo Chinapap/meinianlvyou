@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yinjing.dao.TravelItemDao">
+    <sql id="selectAll">select id,
+                               code,
+                               name,
+                               sex,
+                               age,
+                               price,
+                               type,
+                               attention,
+                               remark
+                        from `t_travelitem`</sql>
+    <insert id="add" parameterType="com.yinjing.pojo.TravelItem">
+        insert into `t_travelitem` (id, code, name, sex, age, price, type, attention, remark)
+        values (null, #{code}, #{name}, #{sex}, #{age}, #{price}, #{type}, #{attention}, #{remark})
+    </insert>
+
+    <select id="findPage" parameterType="string" resultType="com.yinjing.pojo.TravelItem">
+        <include refid="selectAll"/>
+        <where>
+            <if test="value != null and value.length > 0">
+                name like concat('%',#{value},'%') or code = #{value}
+            </if>
+        </where>
+    </select>
+
+    <delete id="remove" parameterType="int">
+        delete
+        from `t_travelitem`
+        where id = #{id}
+    </delete>
+
+
+    <update id="update" parameterType="com.yinjing.pojo.TravelItem">
+        update `t_travelitem`
+        set code      = #{code},
+            name      = #{name},
+            sex       = #{sex},
+            age       = #{age},
+            price     = #{price},
+            type      = #{type},
+            attention = #{attention},
+            remark    = #{remark}
+        where id = #{id}
+    </update>
+
+    <select id="findById" resultType="com.yinjing.pojo.TravelItem" parameterType="int">
+        <include refid="selectAll"/>
+        where id = #{id}
+    </select>
+    <select id="findAll" resultType="com.yinjing.pojo.TravelItem">
+        <include refid="selectAll"/>
+
+    </select>
+</mapper>

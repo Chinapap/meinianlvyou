@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yinjing.dao.TravelGroupDao">
+    <sql id="selectAll">
+        select `id`, `code`, `name`, `helpCode`, `sex`, `remark`, `attention`
+        from `t_travelgroup`
+    </sql>
+
+    <insert id="add" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into `t_travelgroup` (id, code, name, helpCode, sex, remark, attention)
+        values (null, #{code}, #{name}, #{helpCode}, #{sex}, #{remark}, #{attention})
+    </insert>
+    <insert id="bathAddGroupAndItem" parameterType="map">
+        insert into `t_travelgroup_travelitem` (travelgroup_id, travelitem_id)
+        values (#{travelGroup}, #{travelItem})
+
+    </insert>
+    <update id="update">
+        update `t_travelgroup`
+        set code     = #{code},
+            name=#{name},
+            helpCode=#{helpCode},
+            sex=#{sex},
+            remark=#{remark},
+            attention=#{attention}
+        where id = #{id}
+    </update>
+
+    <select id="findPage" resultType="com.yinjing.pojo.TravelGroup">
+        <include refid="selectAll"></include>
+    </select>
+    <select id="findById" resultType="com.yinjing.pojo.TravelGroup">
+        <include refid="selectAll"/>
+        WHERE id = #{id}
+    </select>
+    <select id="findTravelItemsByGroupId" resultType="int">
+        SELECT travelitem_id FROM t_travelgroup_travelitem WHERE travelgroup_id = #{id}
+
+    </select>
+    <select id="findAll" resultType="com.yinjing.pojo.TravelGroup">
+        <include refid="selectAll"/>
+    </select>
+</mapper>

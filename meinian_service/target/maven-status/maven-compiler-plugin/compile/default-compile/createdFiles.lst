@@ -1,0 +1,4 @@
+com\yinjing\service\impl\SetmealServiceImpl.class
+com\yinjing\service\impl\OrderSettingServiceImpl.class
+com\yinjing\service\impl\TravelItemServiceImpl.class
+com\yinjing\service\impl\TraveGroupServiceImpl.class
